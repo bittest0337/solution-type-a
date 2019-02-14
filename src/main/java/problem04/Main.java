@@ -1,8 +1,10 @@
 package problem04;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class Main {
 	static File file = null;
 	public static void main(String[] args) {
-		file = new File("result.txt");
+		
 		int count = 0;
 		int[] randomNumArray = randomStart(); // 초기에 생성 랜덤
 		System.out.println(Arrays.toString(randomNumArray));
@@ -47,9 +49,10 @@ public class Main {
 				long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
 				long time = (long) ((end - start )/1000.0); //실행 시간 계산 및 출력
 				try {
-					FileWriter fw = new FileWriter(file, true);
-					fw.write("/"+time+count);
-					fw.close();
+					OutputStream output = new FileOutputStream("C:/file/result.txt");
+					String text = new String("/"+time+count);
+					output.write(text.getBytes());
+					output.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -64,15 +67,16 @@ public class Main {
 		int[] randomNum = new int[3];
 		Random rd = new Random();
 		int num;
-		
+		String numString = null;
 		try {
-			FileWriter fw = new FileWriter(file, true);
+			OutputStream output = new FileOutputStream("C:/file/result.txt");
 			for (int i = 0; i < randomNum.length; i++) {
 				num = rd.nextInt(10);
-				fw.write(num);
+				numString += String.valueOf(num);
 				randomNum[i] = num;
 			}
-			fw.close();
+			output.write(numString.getBytes());
+			output.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
